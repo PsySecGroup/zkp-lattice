@@ -1,0 +1,28 @@
+{
+  "name": "zkp-lattice",
+  "version": "1.0.0",
+  "description": "Performs zero-knowledge proofs for lattices",
+  "main": "src/index.js",
+  "repository": "https://github.com/PsySecGroup/zkp-lattice.git",
+  "author": "HyperCrowd <info@hypercrowd.org>",
+  "license": "MIT",
+  "private": false,
+  "module": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node tests/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0"
+  },
+  "dependencies": {
+    "@stablelib/random": "^1.0.2",
+    "esm": "^3.2.25"
+  }
+}
