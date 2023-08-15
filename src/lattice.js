@@ -1,15 +1,11 @@
+// import { createHash } from 'crypto'
 import { randomUint32 } from '@stablelib/random'
-
-/**
- * Simulated default hash function (this is NOT secure, use a proper hash function in practice)
- */
-function hash (data) {
-  let hashValue = 0
-  for (let i = 0; i < data.length; i++) {
-    hashValue = (hashValue + data[i]) % 256
-  }
-  return hashValue
-}
+import {
+  hash,
+  encoder,
+  responder,
+  verifier
+} from './transforms'
 
 /**
  * Function to create a random vector with values in the range [0, modulus)
@@ -40,7 +36,7 @@ export function createLattice (dimension, modulus, latticeSize) {
 export function encodeLattice (lattice, x, modulus) {
   const encodedLattice = []
   for (let i = 0; i < lattice.length; i++) {
-    const encodedVector = lattice[i].map(element => (element * x) % modulus)
+    const encodedVector = lattice[i].map(element => encoder(element, x, modulus))
     encodedLattice.push(encodedVector)
   }
   return encodedLattice
@@ -65,13 +61,7 @@ export function generateChallenge () {
  * Generate a response to the challenge based on the secret value and encoded lattice
  */
 export function generateResponse (challenge, secretValue, encodedLattice, modulus) {
-  const response = encodedLattice.map(vector => {
-    let sum = 0
-    for (let i = 0; i < vector.length; i++) {
-      sum += (vector[i] * secretValue * challenge) % modulus
-    }
-    return sum
-  })
+  const response = encodedLattice.map(vector => responder(vector, secretValue, challenge, modulus))
   return response
 }
 
@@ -79,7 +69,7 @@ export function generateResponse (challenge, secretValue, encodedLattice, modulu
  * Verify the response against the commitment and challenge
  */
 export function verifyResponse (commitment, challenge, response, modulus) {
-  const expectedCommitment = response.map(value => (value * challenge) % modulus)
+  const expectedCommitment = response.map(value => verifier(value, challenge, modulus))
 
   for (let i = 0; i < commitment.length; i++) {
     if (commitment[i] !== expectedCommitment[i]) {
