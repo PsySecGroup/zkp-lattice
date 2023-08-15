@@ -39,19 +39,12 @@ const {
 ## Key Functions
 
 - `generateRandomVector`: Generates a random vector with values in the specified range.
-  - 
 - `createLattice`: Creates a lattice with random vectors.
-  - 
 - `encodeLattice`: Encodes a secret value into the lattice using scalar multiplication.
-  - 
 - `createCommitment`: Creates a commitment vector based on hashed encoded lattice vectors.
-  - 
 - `generateChallenge`: Generates a random challenge for the ZKP (replace with a secure random generator).
-  - 
 - `generateResponse`: Generates a response to the challenge based on the secret value and encoded lattice.
-  - 
 - `verifyResponse`: Verifies if the response matches the expected commitment.
-  - 
 
 [Review the test](tests/index.js) to see the correct order of code execution.
 
